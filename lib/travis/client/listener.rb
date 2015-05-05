@@ -31,7 +31,9 @@ module Travis
 
         def fetch_auth(*channels)
           channels.select! { |c| signatures[c].nil? if c.start_with? 'private-' }
-          signatures.merge! session.post_raw('/pusher/auth', :channels => channels, :socket_id => socket_id)['channels'] if channels.any?
+          sig = session.post_raw('/pusher/auth', :channels => channels, :socket_id => socket_id)
+          puts sig
+          signatures.merge! sig['channels'] if channels.any?
         end
 
         def get_private_auth(channel)
