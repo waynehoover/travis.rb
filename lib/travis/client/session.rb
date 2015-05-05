@@ -201,10 +201,10 @@ module Travis
       end
 
       def raw(verb, url, *args)
-        puts "RAW: #{verb.inspect} #{url.inspect} #{args.inspect}"
         url    = url.sub(/^\//, '')
         result = instrumented(verb.to_s.upcase, url, *args) do
           connection.public_send(verb, url, *args) do |request|
+            puts request.inspect
             next if request.path !~ /^https?:/ or request.path.start_with? api_endpoint
             request.headers.delete("Authorization")
           end
