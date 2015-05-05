@@ -201,6 +201,7 @@ module Travis
       end
 
       def raw(verb, url, *args)
+        puts "RAW: #{verb.inspect} #{url.inspect} #{args.inspect}"
         url    = url.sub(/^\//, '')
         result = instrumented(verb.to_s.upcase, url, *args) do
           connection.public_send(verb, url, *args) do |request|
